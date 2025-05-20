@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="en" data-bs-theme="light">
+
+  <head>
+    <!-- Google Tag Manager -->
+    <script>(function (w, d, s, l, i) {
+        w[l] = w[l] || []; w[l].push({
+          'gtm.start':
+            new Date().getTime(), event: 'gtm.js'
+        }); var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+            'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+      })(window, document, 'script', 'dataLayer', 'GTM-KDJRPFH');</script>
+    <!-- End Google Tag Manager -->
+    <meta charset="utf-8">
+    <link type="image/x-icon" href="./assets/images/BP2025/bp2025Favicon.png" rel="shortcut icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta property="fb:pages" content="1459542281017485" />
+    <title>Philippine Mid-Term Senatorial Results 2025 | Bilang Pilipino</title>
+
+    <meta property="og:url" content="http://www.tv5.com.ph/bilangpilipino/results/senatorial_race" />
+    <meta property="og:title" content="Philippine Mid-Term Senatorial Results 2025 | Bilang Pilipino" />
+    <meta property="og:image" content="./assets/images/BilangPilipinoTag.jpg" />
+    <meta property="og:site_name" content="Philippine Mid-Term Senatorial Results 2025 | Bilang Pilipino" />
+    <meta property="og:description"
+      content="Senatorial Results. The MediaQuest group coverage of the 2025 Philippine Mid-Term Elections." />
+    <meta property="description"
+      content="Senatorial Results. The MediaQuest group coverage of the 2025 Philippine Mid-Term Elections." />
+    <meta name="keywords"
+      content="senatorial results, bilang pilipino, 2025, Philippine election, mid-term, boses ng bayan, bayan ang ipanalo, tv5" />
+    <meta name="twitter:card" content="photo" />
+    <meta name="twitter:title" content="Philippine Mid-Term Senatorial Results 2025 | Bilang Pilipino" />
+    <meta name="twitter:image" content="./assets/BP2025/assets/images/BilangPilipinoTag.jpg" />
+    <meta name="twitter:site" content="http://www.tv5.com.ph/bilangpilipino/results/senatorial_race" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+      integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+      crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+      crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <script src="https://unpkg.com/htmx.org@2.0.4"
+      integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+"
+      crossorigin="anonymous"></script>
+    <!-- style sheet for vectormap.js -->
+    <link rel="stylesheet" href="https://cdn.thinkgeo.com/vectormap-js/3.0.0/vectormap.css">
+    </link>
+
+    <!-- latest minified version of vectormap.js -->
+    <script src="https://cdn.thinkgeo.com/vectormap-js/3.0.0/vectormap.js"></script>
+
+    <!-- option: Map Suite World Streets Styles -->
+    <script src="https://cdn.thinkgeo.com/vectormap-icons/3.0.0/webfontloader.js"></script>
+    <script>
+      WebFont.load({
+        custom: {
+          families: ["vectormap-icons"],
+          urls: ["https://cdn.thinkgeo.com/vectormap-icons/3.0.0/vectormap-icons.css"]
+        }
+      });
+    </script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+
+    <style>
+      h1 {
+        font-size: 48px;
+        font-style: normal;
+        font: 700 48px 'Oswald', sans-serif;
+      }
+
+      .container-participants {
+        max-height: unset;
+        overflow: unset;
+      }
+    </style>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VHRDX426H7"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+      integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+      crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script async='async' src='https://www.googletagservices.com/tag/js/gpt.js'></script>
+    <script>
+      var googletag = googletag || {};
+      googletag.cmd = googletag.cmd || [];
+
+
+      window.googletag = window.googletag || {
+        cmd: []
+      };
+      googletag.cmd.push(function () {
+
+        // https://developers.google.com/publisher-tag/guides/ad-sizes?hl=en&authuser=6
+
+        var leaderboardmapping = googletag.sizeMapping().
+          addSize([970, 300], [
+            [970, 250],
+            [970, 90],
+            [728, 90]
+          ]).
+          addSize([728, 300], [
+            [728, 90]
+          ]).
+          addSize([0, 0], [
+            [320, 50],
+            [320, 100]
+          ]).
+          build();
+
+        var mobleaderboardmapping = googletag.sizeMapping().
+          addSize([728, 300], []).
+          addSize([0, 0], [
+            [320, 50],
+            [320, 100]
+          ]).
+          build();
+
+        var skyscraperboardmapping = googletag.sizeMapping().
+          addSize([728, 300], [
+            [336, 280],
+            [300, 250],
+            [300, 600],
+            [160, 600],
+            [120, 600]
+          ]).
+          addSize([0, 0], [
+            [336, 280],
+            [300, 250]
+          ]).
+          build();
+        var footerleaderboardmapping = googletag.sizeMapping().
+          addSize([728, 300], [
+            [728, 90]
+          ]).
+          addSize([0, 0], []).
+          build();
+        var stickyad = googletag.sizeMapping().
+          addSize([728, 300], []).
+          addSize([0, 0], [
+            [320, 50]
+          ]).
+          build();
+
+
+        // Define ad slots.
+        let slots = [
+          googletag.defineSlot('/14668236/BilangPilipino_Banner_Leaderboard', [
+            [320, 100],
+            [728, 90],
+            [320, 50],
+            [970, 90],
+            [970, 250]
+          ], 'div-gpt-ad-1739155229220-0').defineSizeMapping(leaderboardmapping).addService(googletag.pubads()),
+
+          googletag.defineSlot('/14668236/BilangPilipino_Skyscraper_Sidebar', [
+            [300, 250],
+            [300, 600],
+            [160, 600],
+            [120, 600],
+            [336, 280]
+          ], 'div-gpt-ad-1739165099712-0').defineSizeMapping(skyscraperboardmapping).addService(googletag.pubads()),
+          googletag.defineSlot('/14668236/BilangPilipino_Footer_Leaderboard', [
+            [320, 100],
+            [728, 90],
+            [320, 50],
+            [970, 90]
+          ], 'div-gpt-ad-1739165333153-0').defineSizeMapping(footerleaderboardmapping).addService(googletag.pubads()),
+          googletag.defineSlot('/14668236/BilangPilipino_Bottom_Sticky', [320, 50], 'div-gpt-ad-1742193036752-0').defineSizeMapping(stickyad).addService(googletag.pubads())
+
+        ];
+
+        //https://developers.google.com/publisher-tag/samples/lazy-loading?hl=en&authuser=6
+        googletag.pubads().enableLazyLoad({
+          fetchMarginPercent: 200, // Load ads when they are within 200% of the viewport
+          renderMarginPercent: 50, // Render ads when they are within 50% of the viewport
+          mobileScaling: 2.0 // Increase margins for mobile devices
+        });
+
+        googletag.pubads().enableSingleRequest();
+        googletag.pubads().collapseEmptyDivs(true);
+        googletag.pubads().setTargeting('environment', []).setTargeting('page', ['senatorial-results-page']).setTargeting('slug', []);
+        googletag.enableServices();
+      });
+    </script>
+
+    <style>
+      .ad-center-align {
+        margin: 20px auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+    </style>
+
+    <!-- Meta Pixel Code -->
+    <script>
+      ! function (f, b, e, v, n, t, s) {
+        if (f.fbq) return;
+        n = f.fbq = function () {
+          n.callMethod ?
+            n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+        };
+        if (!f._fbq) f._fbq = n;
+        n.push = n;
+        n.loaded = !0;
+        n.version = '2.0';
+        n.queue = [];
+        t = b.createElement(e);
+        t.async = !0;
+        t.src = v;
+        s = b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t, s)
+      }(window, document, 'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', '681042787784332');
+      fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+        src="https://www.facebook.com/tr?id=681042787784332&ev=PageView&noscript=1" /></noscript>
+    <!-- End Meta Pixel Code -->
+  </head>
+
+  <body>
+
+    <!-- /14668236/BilangPilipino_Banner_Leaderboard -->
+    <div id='div-gpt-ad-1739155229220-0' style='min-width: 320px; min-height: 50px;' class="ad-center-align">
+      <script>
+        googletag.cmd.push(function () {
+          googletag.display('div-gpt-ad-1739155229220-0');
+        });
+      </script>
+    </div>
+    <nav class="navbar navbar-expand-lg pb-0 mt-2 mt-lg-0">
+      <div class="container">
+        <a class="navbar-brand" href="index.html">
+          <img src="./assets/images/logo.png" alt="BP logo" class="nav-logo">
+        </a>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="index.html">RESULTS</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="https://www.tv5.com.ph/bilangpilipino/news">NEWS</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page"
+                href="https://www.tv5.com.ph/bilangpilipino/explainers">EXPLAINERS</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page"
+                href="https://www.tv5.com.ph/bilangpilipino/senatoriables">SENATORIABLES</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page"
+                href="https://www.tv5.com.ph/bilangpilipino/balwarte">BALWARTE</a>
+            </li>
+          </ul>
+
+        </div>
+      </div>
+    </nav>
+    <div class="container ">
+      <ul class="nav justify-content-center d-flex flex-row d-md-block d-lg-none flex-nowrap overflow-x-scroll">
+
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href=index.html">RESULTS</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="https://www.tv5.com.ph/bilangpilipino/news">NEWS</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page"
+            href="https://www.tv5.com.ph/bilangpilipino/explainers">EXPLAINERS</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page"
+            href="https://www.tv5.com.ph/bilangpilipino/senatoriables">SENATORIABLES</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page"
+            href="https://www.tv5.com.ph/bilangpilipino/balwarte">BALWARTE</a>
+        </li>
+      </ul>
+      <!-- End Header -->
+      <!-- Hero -->
+
+
+      <!-- End Hero -->
+
+      <!-- Mobile Ad -->
+      <div class="container p-3">
+        <div class="d-grid">
+          <!-- <img src="<?= base_url('assets//images/BP2025/count/mobile_ad.jpg') ?>" alt="" class="mx-auto"> -->
+        </div>
+      </div>
+      <!-- End Mobile Ad -->
+
+
+      <div class="container container-unset">
+        <div style="padding: 8px 16px">
+          <h1 class="senatorial-results">PARTY-LIST RACE RESULTS</h1>
+
+          <div class="flex flex-column" style="font-size: 12px;">
+            <div class="m-0 text-mid-gray">2025 National and Local Elections </div>
+            <div class="m-0 text-mid-gray "> Partial and Unofficial Results as of
+
+              <span class="election-timestamp"> </span>
+            </div>
+            <div class="m-0 text-mid-gray">
+              Source: COMELEC MEDIA SERVER
+            </div>
+          </div>
+        </div>
+
+
+
+
+        <div class="divider mt-1 mb-4 "></div>
+      </div>
+
+      <!-- Election Results -->
+      <div class="container mt-3 container-unset">
+
+        <div class="row px-4">
+          <div class="col-12 col-lg-7">
+            <div class="container p-0">
+
+
+              <div class="tab-content">
+                <div class="tab-pane fade show active" id="party-list" role="tabpanel">
+
+
+
+                  <!-- Senatorial Participants -->
+                  <div class="d-flex mt-2 flex-column gap-3 container-participants">
+                    <!-- Data will be loaded here by JavaScript -->
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-lg-5 d-none d-lg-block">
+            <div>
+              <!-- /14668236/BilangPilipino_Skyscraper_Sidebar -->
+              <div id='div-gpt-ad-1739165099712-0' style='min-width: 120px; min-height: 250px;' class="ad-center-align">
+                <script>
+                  googletag.cmd.push(function () {
+                    googletag.display('div-gpt-ad-1739165099712-0');
+                  });
+                </script>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-2 container-philippines position-relative" style="display: none;">
+
+          <div id="map" class=" position-absolute w-100"></div>
+          <div id="info-box" class="position-absolute top-0 end-0 mt-2 me-5"></div>
+          <div class="position-absolute top-0 end-0 mt-2 me-2 d-flex flex-column gap-2">
+
+            <button type="button" class="btn btn-sm btn-light" onclick="map2.zoomIn()">
+
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M6.85714 9.14286H0V6.85714H6.85714V0H9.14286V6.85714H16V9.14286H9.14286V16H6.85714V9.14286Z"
+                  fill="#1C1B1F" />
+                <path
+                  d="M7.52381 9.14286V8.47619H6.85714H0.666667V7.52381H6.85714H7.52381V6.85714V0.666667H8.47619V6.85714V7.52381H9.14286H15.3333V8.47619H9.14286H8.47619V9.14286V15.3333H7.52381V9.14286Z"
+                  stroke="black" stroke-opacity="0.4" stroke-width="1.33333" />
+              </svg>
+            </button>
+            <button type="button" class="btn btn-sm btn-light" onclick="map2.zoomOut()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="4" viewBox="0 0 16 4" fill="none">
+                <path d="M0 3.33464V0.667969H16V3.33464H0Z" fill="#1C1B1F" />
+              </svg>
+            </button>
+            <button type="button" class="btn btn-sm btn-light"
+              onclick="map2.setView([12.8797, 121.7740], 5.48); document.getElementById('info-box').style.display = 'none';">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path
+                  d="M6.11486 7.9995L0.458008 2.34265L2.34363 0.457031L8.00048 6.11388L13.6573 0.457031L15.543 2.34265L9.8861 7.9995L15.543 13.6564L13.6573 15.542L8.00048 9.88512L2.34363 15.542L0.458008 13.6564L6.11486 7.9995Z"
+                  fill="#1C1B1F" />
+                <path
+                  d="M6.58627 8.47091L7.05767 7.9995L6.58627 7.5281L1.40082 2.34265L2.34363 1.39984L7.52908 6.58529L8.00048 7.05669L8.47188 6.58529L13.6573 1.39984L14.6001 2.34265L9.41469 7.5281L8.94329 7.9995L9.41469 8.47091L14.6001 13.6564L13.6573 14.5992L8.47188 9.41372L8.00048 8.94231L7.52908 9.41372L2.34363 14.5992L1.40082 13.6564L6.58627 8.47091Z"
+                  stroke="black" stroke-opacity="0.4" stroke-width="1.33333" />
+              </svg>
+            </button>
+          </div>
+        </div>
+        <!-- <div class="div text-center p-4 bg-dark mt-5 text-white"></div> -->
+        <!-- /14668236/BilangPilipino_Footer_Leaderboard -->
+        <div id='div-gpt-ad-1739165333153-0' style='min-width: 320px; min-height: 50px;' class="ad-center-align">
+          <script>
+            googletag.cmd.push(function () {
+              googletag.display('div-gpt-ad-1739165333153-0');
+            });
+          </script>
+        </div>
+      </div>
+
+      <footer class="mt-3  py-3 ">
+        <div class="container d-flex justify-content-between ">
+
+          <div class="d-flex flex-column gap-2 w-100">
+            <div class="d-flex flex-row justify-content-between">
+              <img class="footer-logo-img cursor-hand" src="./assets/images/bilangpilipinologo-removebg-preview 1.png"
+                alt="Footer-Logo-Image" onclick="location.href='index.html'">
+              <div class="d-flex align-items-center d-md-none">
+                <a href="https://www.facebook.com/@BilangPilipino/" target="_blank"> <img
+                    src="./assets/images/BTN_ Facebook.png" alt="Network Logo 1" class="footer-img-social-fb"></a>
+                <a href="https://www.instagram.com/bilangpilipinoofficial" target="_blank"> <img
+                    src="./assets/images/BTN_ Instagram.png" alt="Network Logo 1" class="footer-img-social"></a>
+                <a href="https://www.threads.net/@bilangpilipinoofficial" target="_blank"> <img
+                    src="./assets/images/BTN_ X.png" alt="Network Logo 1" class="footer-img-social"></a>
+                <a href="https://www.tiktok.com/@bilangpilipino" target="_blank"> <img
+                    src="./assets/images/BTN_ TikTok.png" alt="Network Logo 1" class="footer-img-social"></a>
+              </div>
+            </div>
+            <p class="">2025 &copy; All rights reserved.</p>
+            <div class="d-flex align-items-center">
+              <p class="m-0 me-2 text-nowrap">
+                More from our network:
+              </p>
+              <div class="d-flex align-items-center">
+                <a href="https://news.tv5.com.ph/" target="_blank"> <img src="./assets/images/img-newsfive-light.webp"
+                    alt="News5" class="footer-img img-newsfive" style='min-width:65px'></a>
+                <a href="https://www.philstar.com/tags/2025-midterm-elections" target="_blank"> <img
+                    src="./assets/images/footer-img-philstar.png" alt="Philstar.com" class="footer-img"></a>
+                <a href="https://www.bworldonline.com/" target="_blank"> <img src="./assets/images/footer-img-bw.png"
+                    alt="Business World" class="footer-img"></a>
+                <a href="https://philstarlife.com/news-and-views" target="_blank"> <img
+                    src="./assets/images/img-life-black-on-white.png" alt="Philstar Life"
+                    class="footer-img img-philstar"></a>
+              </div>
+            </div>
+
+            <a href="#" class="privacy" data-bs-toggle="modal" data-bs-target="#popup-policy">Privacy
+              Statement</a><br />
+
+            <img src="./assets/images/NPC_Seal_2024-2025.png" alt='tv5-seal' class="footer-key d-md-none">
+
+          </div>
+          <div class="d-none d-md-flex flex-column align-items-center">
+            <div class="d-flex align-items-center">
+              <a href="https://www.facebook.com/@BilangPilipino/" target="_blank"> <img
+                  src="./assets/images/BTN_ Facebook.png" alt="Network Logo 1" class="footer-img-social-fb"></a>
+              <a href="https://www.instagram.com/bilangpilipinoofficial" target="_blank"> <img
+                  src="./assets/images/BTN_ Instagram.png" alt="Network Logo 1" class="footer-img-social"></a>
+              <a href="https://www.threads.net/@bilangpilipinoofficial" target="_blank"> <img
+                  src="./assets/images/BTN_ X.png" alt="Network Logo 1" class="footer-img-social"></a>
+              <a href="https://www.tiktok.com/@bilangpilipino" target="_blank"> <img
+                  src="./assets/images/BTN_ TikTok.png" alt="Network Logo 1" class="footer-img-social"></a>
+            </div>
+
+            <!-- hide for mobile -->
+            <img src="./assets/images/NPC_Seal_2024-2025.png" alt='tv5-seal' class="footer-key d-none d-md-block">
+          </div>
+        </div>
+      </footer>
+
+
+      <div class="d-block d-md-none position-fixed bottom-0 w-100 m-auto ">
+        <!-- /14668236/BilangPilipino_Bottom_Sticky -->
+        <div id='div-gpt-ad-1742193036752-0' style='min-width: 320px; min-height: 50px; margin-bottom: 0!important;'
+          class="ad-center-align">
+          <script>
+            googletag.cmd.push(function () {
+              googletag.display('div-gpt-ad-1742193036752-0');
+            });
+          </script>
+        </div>
+      </div>
+
+
+
+
+      <script>
+        async function displaySenatorialData(senators) {
+          const container = getContainerElement('senators');
+          if (!validateData(senators, container)) return;
+
+          const totalVotes = calculateTotalVotes(senators);
+          const sortedSenators = sortByRank([...senators]);
+          generateCandidateHTML(sortedSenators, totalVotes, 'senators', Infinity);
+        }
+
+        function displayPartylistData(partylists) {
+          const container = getContainerElement('party-list');
+          if (!validateData(partylists, container)) return;
+
+          const totalVotes = calculateTotalVotes(partylists);
+          const sortedPartylists = sortByRank([...partylists]);
+          generateCandidateHTML(sortedPartylists, totalVotes, 'party-list', DEFAULT_DISPLAY_COUNT);
+        }
+        const BASE_URL = "";
+        var BP_WEB_API_USERNAME = "";
+        var BP_WEB_API_PASSWORD = "";
+      </script>
+      <script src="./assets/js/election-returns.js"></script>
+      <script src="./assets/js/election-results.js"></script>
+      <script src="./assets/js/map.js"></script>
+  </body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KDJRPFH" height="0" width="0"
+      style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
+</html>
