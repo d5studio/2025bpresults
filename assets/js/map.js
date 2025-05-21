@@ -74,7 +74,7 @@ async function queryData({ region, province, city: fCity, national }) {
 			// console.log('fRegion: ', fRegion)
 			// console.log('fCity: ', fCity)
 			// console.log('fProvince: ', fProvince)
-
+			// console.log("eto");
 			response = await fetch(`${BASE}/${fRegion}/${fProvince.toLowerCase()}/${fCity.toLowerCase()}.json`);
 			response = await response.json();
 		}
@@ -136,7 +136,8 @@ async function queryData({ region, province, city: fCity, national }) {
 				return obj
 			}
 
-			response = await fetch(`${BASE}/${fRegion}/${provinceCode}.json`);
+			response = await fetch(`${BASE}/${fRegion}/${province}.json`);
+			// response = await fetch(`${BASE}/${fRegion}/${provinceCode}.json`);
 			response = await response.json();
 		}
 		return response;
@@ -695,7 +696,7 @@ async function highlightProvinceOnMap(provinceName, cityName, regionName = null)
 		const { results, timestamp } = await queryData({
 			// payload, provLayer.feature.properties.NAME_1
 			region: regionHover,
-			province: provinceName.toLowerCase()
+			province: provinceName
 		});
 		// console.log(results);
 		activateTab('[data-type="localrace"]');
@@ -713,24 +714,23 @@ async function highlightProvinceOnMap(provinceName, cityName, regionName = null)
 	} else {
 		updateInfoBox(provinceName, `under ${regionHover}`);
 	}
-
 	if (!provincesLayer) return;
 
 	clearHighlightedLayers();
 	let found = false;
-
+	// console.log(allProvincesData);
 	provincesLayer.eachLayer((layer) => {
 		const layerProvince = layer.feature?.properties.NAME_1;
 		if (
 			layerProvince &&
-			layerProvince.toLowerCase() === provinceName.toLowerCase()
+			layerProvince.toLowerCase() === provinceName.replace(/[\s-]+/g, '').toLowerCase()
 		) {
 			highlightLayer(layer);
 			found = true;
 
 			// Find the corresponding feature in the original data
 			const feature = allProvincesData.features.find(
-				(f) => f.properties.NAME_1.toLowerCase() === provinceName.toLowerCase()
+				(f) => f.properties.NAME_1.toLowerCase() === provinceName.replace(/[\s-]+/g, '').toLowerCase()
 			);
 
 			// console.log(feature, 'featurefeature')
@@ -1086,7 +1086,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 			displayPartylistData(results.partyList, READY.status);
 		}
 	} catch (error) {
-		updateTimestampDisplay('Error loading data');
+		// updateTimestampDisplay('Error loading data');
 		// updatePercentageDisplay('0')
 
 	}
@@ -1095,6 +1095,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
 function highlightLayer(layer) {
+	console.log(layer);
 	layer.setStyle({
 		weight: 3,
 		color: "#1E90FF",

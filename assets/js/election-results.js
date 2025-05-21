@@ -37,7 +37,6 @@ async function initializeElectionResults() {
     console.error('Initialization error:', error);
     displayError();
   }
-  debugger;
 }
 
 async function fetchAndDisplayData(dataType, displayFunction, electionData = {}) {

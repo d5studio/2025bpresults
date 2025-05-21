@@ -123,7 +123,7 @@ function createPlaceElement(place, regionName = null, regionTxt = null) {
 				await queryMappedData("province");
 
 				// Update all timestamp displays
-				updateTimestampDisplay(timestamp, 200);
+				// updateTimestampDisplay(timestamp, 200);
 				// updatePercentageDisplay(percentage, 200)
 
 				document.getElementById("selected-place").textContent = place.name;
@@ -135,7 +135,7 @@ function createPlaceElement(place, regionName = null, regionTxt = null) {
 				}
 			} catch (error) {
 				console.log(error);
-				updateTimestampDisplay('Error loading data');
+				// updateTimestampDisplay('Error loading data');
 				// updatePercentageDisplay('0')
 			}
 		});
