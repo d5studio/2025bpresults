@@ -7460,48 +7460,6 @@
       "code": "national_capital_region",
       "places": [
         {
-          "id": "ncr-4th-district",
-          "name": "National Capital Region - Fourth District",
-          "code": "national_capital_region_fourth_district",
-          "subplaces": [
-            {
-              "id": "city-of-las-piñas",
-              "name": "CITY OF LAS PIÑAS",
-              "code": "city_of_las_piñas"
-            },
-            {
-              "id": "city-of-makati",
-              "name": "CITY OF MAKATI",
-              "code": "city_of_makati"
-            },
-            {
-              "id": "city-of-muntinlupa",
-              "name": "CITY OF MUNTINLUPA",
-              "code": "city_of_muntinlupa"
-            },
-            {
-              "id": "city-of-parañaque",
-              "name": "CITY OF PARAÑAQUE",
-              "code": "city_of_parañaque"
-            },
-            {
-              "id": "city-of-taguig",
-              "name": "CITY OF TAGUIG",
-              "code": "city_of_taguig"
-            },
-            {
-              "id": "pasay-city",
-              "name": "PASAY CITY",
-              "code": "pasay_city"
-            },
-            {
-              "id": "pateros",
-              "name": "PATEROS",
-              "code": "pateros"
-            }
-          ]
-        },
-        {
           "id": "ncr-1st-district",
           "name": "National Capital Region - Manila",
           "code": "national_capital_region_manila",
@@ -7569,6 +7527,48 @@
               "id": "city-of-valenzuela",
               "name": "CITY OF VALENZUELA",
               "code": "city_of_valenzuela"
+            }
+          ]
+        }
+        {
+          "id": "ncr-4th-district",
+          "name": "National Capital Region - Fourth District",
+          "code": "national_capital_region_fourth_district",
+          "subplaces": [
+            {
+              "id": "city-of-las-piñas",
+              "name": "CITY OF LAS PIÑAS",
+              "code": "city_of_las_piñas"
+            },
+            {
+              "id": "city-of-makati",
+              "name": "CITY OF MAKATI",
+              "code": "city_of_makati"
+            },
+            {
+              "id": "city-of-muntinlupa",
+              "name": "CITY OF MUNTINLUPA",
+              "code": "city_of_muntinlupa"
+            },
+            {
+              "id": "city-of-parañaque",
+              "name": "CITY OF PARAÑAQUE",
+              "code": "city_of_parañaque"
+            },
+            {
+              "id": "city-of-taguig",
+              "name": "CITY OF TAGUIG",
+              "code": "city_of_taguig"
+            },
+            {
+              "id": "pasay-city",
+              "name": "PASAY CITY",
+              "code": "pasay_city"
+            },
+            {
+              "id": "pateros",
+              "name": "PATEROS",
+              "code": "pateros"
             }
           ]
         }
