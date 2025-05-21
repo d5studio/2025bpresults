@@ -1087,7 +1087,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 		}
 	} catch (error) {
 		updateTimestampDisplay('Error loading data');
-		updatePercentageDisplay('0')
+		// updatePercentageDisplay('0')
 
 	}
 });

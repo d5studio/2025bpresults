@@ -136,7 +136,7 @@ function createPlaceElement(place, regionName = null, regionTxt = null) {
 			} catch (error) {
 				console.log(error);
 				updateTimestampDisplay('Error loading data');
-				updatePercentageDisplay('0')
+				// updatePercentageDisplay('0')
 			}
 		});
 
