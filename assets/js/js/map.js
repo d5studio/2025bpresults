@@ -80,7 +80,7 @@ async function queryData({ region, province, city: fCity, national }) {
 		}
 		else if (fRegion && fProvince) {
 
-			// console.log(allLocations);
+			console.log(allLocations);
 
 			let provinceCode = allLocations.regions
 				.find(r => {
@@ -288,7 +288,7 @@ function drawMap() {
 							// console.log(provLayer.feature.properties.NAME_1.toLowerCase(),'boooooooooooooo')
 
 
-							// activateTab('[data-type="localrace"]');
+							activateTab('[data-type="localrace"]');
 
 							generateLocalRaceHTML(results)
 
@@ -374,8 +374,6 @@ function drawMap() {
 				// issue relies here
 				showCitiesForProvince(feature);
 				updateElectionResults("province", feature.properties.NAME_1);
-				console.log("clicked city");
-				activateTab('[data-type="senators"]');
 			}
 		),
 
@@ -688,7 +686,7 @@ function highlightRegionOnMap(regionName) {
 	}
 }
 
-async function highlightProvinceOnMap(provinceName, cityName, regionName = null) {
+async function highlightProvinceOnMap(provinceName, cityName) {
 	// console.log(cityName, 'citynaeemeeeeeeeeeeeee')
 	if (!cityName) {
 
@@ -697,7 +695,6 @@ async function highlightProvinceOnMap(provinceName, cityName, regionName = null)
 			region: regionHover,
 			province: provinceName.toLowerCase()
 		});
-		// console.log(results);
 		activateTab('[data-type="localrace"]');
 
 		const pGov = returnKeyOfArr('PROVINCIAL GOVERNOR', results);
@@ -708,11 +705,7 @@ async function highlightProvinceOnMap(provinceName, cityName, regionName = null)
 
 	}
 
-	if (regionName !== null) {
-		updateInfoBox(provinceName, `under ${regionName}`);
-	} else {
-		updateInfoBox(provinceName, `under ${regionHover}`);
-	}
+	updateInfoBox(provinceName, `under ${regionHover}`);
 
 	if (!provincesLayer) return;
 
@@ -776,8 +769,7 @@ async function clickedByHeader({ region, province, city }) {
 		displayPartylistData(results['PARTY LIST OF PHILIPPINES']);
 
 		// buildLocalPayload(results)
-		generateLocalRaceHTML(results);
-		console.log(city);
+		generateLocalRaceHTML(results)
 		updateInfoBox(city, `under ${province}`);
 
 		// buildLocalPayload(timestamp,results[pGov],results[pVicGov],results[member], results[mayor],results[vMayor], results[member])
@@ -924,12 +916,10 @@ function highlightCityOnMap(cityName, provinceName, region) {
 		? `${cityName} City`
 		: cityName;
 	updateInfoBox(displayCityName, `under ${provinceName}`);
-	document.getElementById("selected-place").innerText = displayCityName;
 	// Then try to find and highlight the city
 	const tryHighlightCity = () => {
 		if (!citiesLayer) {
 			setTimeout(tryHighlightCity, 100);
-
 			return;
 		}
 
@@ -953,7 +943,7 @@ function highlightCityOnMap(cityName, provinceName, region) {
 					cityName.toLowerCase() === provinceName.toLowerCase()
 						? `${cityName} City`
 						: cityName;
-				// updateInfoBox(displayCityName, `under ${provinceName}`);
+				updateInfoBox(displayCityName, `under ${provinceName}`);
 				cityFound = true;
 				return;
 			}
@@ -1143,7 +1133,8 @@ function updateInfoBox(name, underText) {
 	infoBox.style.display = "block";
 	infoBox.style.zIndex = "1";
 	infoBox.innerHTML = `<div class="name">${name}</div><hr><div class="under">${underText}</div>	`;
-	document.getElementById("selected-place").innerText = name;
+	document.getElementById("selected-place").textContent = name;
+
 }
 function addLayer(geojsonUrl, nameProperty, styleOptions, onClickHandler) {
 	return fetch(geojsonUrl)
@@ -1230,7 +1221,6 @@ function addLayer(geojsonUrl, nameProperty, styleOptions, onClickHandler) {
 					if (onClickHandler) {
 						layer.on("click", function (e) {
 							onClickHandler(feature, layer, e);
-
 						});
 					}
 					layer.on({
@@ -1521,7 +1511,7 @@ async function showCitiesForProvince(provinceFeature) {
 						.find(dist => dist.subplaces.find(x => x.code === cityCode))
 
 					provinceName = provinceRef.code
-					// updateListAndMap(`summary/${regionRef.code}/${provinceName}/${cityCode}.json`);
+					updateListAndMap(`summary/${regionRef.code}/${provinceName}/${cityCode}.json`);
 
 					const data = await queryData({
 						region: regionRef.code,
@@ -1529,10 +1519,10 @@ async function showCitiesForProvince(provinceFeature) {
 						city: cityCode
 					});
 
-					const results = data.results;
+					const results = data.results
 
 					// Example: Activate the "Local Race" tab
-					// activateTab('[data-type="senators"]');
+					//   activateTab('[data-type="localrace"]');
 					//   const {results} = await queryData(payload, provLayer.feature.properties.NAME_1);
 					// activateTab('[data-type="localrace"]');
 
@@ -1557,7 +1547,7 @@ async function showCitiesForProvince(provinceFeature) {
 		},
 	}).addTo(map);
 
-	// updateInfoBox(provinceName, `under ${region}`);
+	updateInfoBox(provinceName, `under ${region}`);
 	// updateElectionResults("province", provinceName);
 }
 

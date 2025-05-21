@@ -38,7 +38,7 @@ async function fetchRegions() {
 	}
 }
 
-function createPlaceElement(place, regionName = null, regionTxt = null) {
+function createPlaceElement(place, regionName = null) {
 	const placeItem = document.createElement("li");
 	placeItem.className = "place-item d-flex p-0 m-0 flex-column w-100";
 	const modal = bootstrap.Modal.getInstance(document.getElementById("menu"));
@@ -100,8 +100,9 @@ function createPlaceElement(place, regionName = null, regionTxt = null) {
 
 		button.addEventListener("click", async function () {
 			const regionName = button.getAttribute("data-type").trim().replace(/[\s-]+/g, '_').toLowerCase();
+			document.getElementById("selected-place").textContent = place.name;
 			// console.log(place.name, regionName);
-			highlightProvinceOnMap(place.name, regionName, regionTxt);
+			highlightProvinceOnMap(place.name, regionName);
 			// updateElectionResults("province", place.name);
 			if (modal) modal.hide();
 			document.querySelectorAll('.modal.show').forEach(modalEl => {
@@ -126,7 +127,6 @@ function createPlaceElement(place, regionName = null, regionTxt = null) {
 				updateTimestampDisplay(timestamp, 200);
 				// updatePercentageDisplay(percentage, 200)
 
-				document.getElementById("selected-place").textContent = place.name;
 				// Display data
 				if (results) {
 					generateLocalRaceHTML(results, "city");
@@ -186,6 +186,7 @@ function createPlaceElement(place, regionName = null, regionTxt = null) {
 
 		// cities
 		div.addEventListener("click", async function () {
+
 			// Get province name from parent
 			const provinceName = this.closest(".accordion-item")?.querySelector(
 				".accordion-button span"
@@ -195,9 +196,7 @@ function createPlaceElement(place, regionName = null, regionTxt = null) {
 			// )?.textContent;
 			const region2 = regionHover;
 			if (provinceName) {
-				await highlightCityOnMap(place.name, provinceName, region2);
-
-
+				highlightCityOnMap(place.name, provinceName, region2);
 				// updateElectionResults("city", place.name);
 				// console.log(place.name);
 				// console.log("cityyyyyyyyyyyyyyyyy");
@@ -226,6 +225,7 @@ function createPlaceElement(place, regionName = null, regionTxt = null) {
 				// 	updatePercentageDisplay('0')
 				// }
 			}
+			document.getElementById("selected-place").textContent = place.name;
 
 			// Close all modals properly
 			const mainModal = bootstrap.Modal.getInstance(
@@ -258,13 +258,12 @@ function createPlaceElement(place, regionName = null, regionTxt = null) {
 					modalInstance.hide();
 				}
 			});
-			document.getElementById("selected-place").innerText = place.name;
 		});
 	}
 	return placeItem;
 }
 
-function showPlacesInRightColumn(places, regionName, region = null) {
+function showPlacesInRightColumn(places, regionName) {
 	const container = document.getElementById("places-container");
 	container.innerHTML = `
     <ul class="list-unstyled" style="padding: 0; margin: 0;" id="places-list"></ul>
@@ -273,7 +272,7 @@ function showPlacesInRightColumn(places, regionName, region = null) {
 	const placesList = document.getElementById("places-list");
 
 	places.forEach((place) => {
-		placesList.appendChild(createPlaceElement(place, regionName, region));
+		placesList.appendChild(createPlaceElement(place, regionName));
 	});
 }
 
@@ -461,7 +460,7 @@ function createRegionElement(region) {
 		// Desktop behavior - hover to show in right column and click to select region
 		regionDiv.addEventListener("mouseenter", () => {
 			regionDiv.style.backgroundColor = "#f8f9fa";
-			showPlacesInRightColumn(region.places, region.code, region.name);
+			showPlacesInRightColumn(region.places, region.code);
 			regionHover = region.code;
 		});
 

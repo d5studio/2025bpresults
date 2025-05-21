@@ -233,13 +233,16 @@
               <a class="nav-link active" aria-current="page" href="https://www.tv5.com.ph/bilangpilipino/news">NEWS</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="https://www.tv5.com.ph/bilangpilipino/explainers">EXPLAINERS</a>
+              <a class="nav-link active" aria-current="page"
+                href="https://www.tv5.com.ph/bilangpilipino/explainers">EXPLAINERS</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="https://www.tv5.com.ph/bilangpilipino/senatoriables">SENATORIABLES</a>
+              <a class="nav-link active" aria-current="page"
+                href="https://www.tv5.com.ph/bilangpilipino/senatoriables">SENATORIABLES</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="https://www.tv5.com.ph/bilangpilipino/balwarte">BALWARTE</a>
+              <a class="nav-link active" aria-current="page"
+                href="https://www.tv5.com.ph/bilangpilipino/balwarte">BALWARTE</a>
             </li>
           </ul>
 
@@ -329,6 +332,41 @@
             style="display: none; position: fixed; bottom: 20px; right: 20px; background: #4CAF50; color: white; padding: 10px; border-radius: 5px; z-index: 1000;">
             Link copied to clipboard!
           </div>
+
+          <script>
+            document.getElementById('copyLinkBtn').addEventListener('click', function (e) {
+              e.preventDefault(); // Prevent default link behavior
+
+              const urlToCopy = 'https://www.tv5.com.ph/bilangpilipino/results';
+
+              // Modern Clipboard API (works in HTTPS/localhost)
+              if (navigator.clipboard) {
+                navigator.clipboard.writeText(urlToCopy)
+                  .then(() => showCopyNotification())
+                  .catch(err => console.error('Failed to copy:', err));
+              }
+              // Fallback for older browsers
+              else {
+                const textarea = document.createElement('textarea');
+                textarea.value = urlToCopy;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                showCopyNotification();
+              }
+            });
+
+            function showCopyNotification() {
+              const notification = document.getElementById('copyNotification');
+              notification.style.display = 'block';
+
+              // Hide after 3 seconds
+              setTimeout(() => {
+                notification.style.display = 'none';
+              }, 3000);
+            }
+          </script>
 
 
 
@@ -862,6 +900,7 @@
   <script src="./assets/js/election-returns.js"></script>
   <script src=" ./assets/js/election-results.js"></script>
   <script src="./assets/js/map.js"></script>
+  <script src="./assets/js/main.js"></script>
   <!-- Google Tag Manager (noscript) -->
   <noscript>
     <iframe src=" https://www.googletagmanager.com/ns.html?id=GTM-KDJRPFH" height="0" width="0"
