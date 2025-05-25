@@ -279,12 +279,11 @@ function drawMap() {
 						// 	regionFormatted = "cordillera_administrative_region"
 						// }
 						// displaySenatorialData(results?.senatorial)
-
 						try {
 							let payload = formatRegionPayload(region)
 							const { results, timestamp } = await queryData({
 								region: payload,
-								province: provLayer.feature.properties.NAME_1.toLowerCase()
+								province: cities[provLayer.feature.properties.NAME_1.toUpperCase()]
 							});
 							// console.log(provLayer.feature.properties.NAME_1.toLowerCase(),'boooooooooooooo')
 
@@ -375,7 +374,6 @@ function drawMap() {
 				// issue relies here
 				showCitiesForProvince(feature);
 				updateElectionResults("province", feature.properties.NAME_1);
-				console.log("clicked city");
 				activateTab('[data-type="senators"]');
 			}
 		),
@@ -1037,7 +1035,7 @@ let citySenatoriablesData = [];
 //     // console.error('Error loading cities_senatoriables.json:', error);
 //   }
 // }
-
+const cities = [];
 // Call on page load
 // responsible for fetching the data of list onload
 document.addEventListener("DOMContentLoaded", async () => {
@@ -1049,6 +1047,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 	// citySenatoriablesData = results?.senatorial;
 
 	// displayPartylistData(results?.partyList)
+	let tmp = await fetchRegions();
+	tmp.regions.forEach(region => {
+		region.places.forEach(province => {
+			cities[province.name.replace(/\s+/g, "")] = province.code;
+		});
+	});
 
 	try {
 		const res = await fetch(`./assets/json/data_ready.json`);

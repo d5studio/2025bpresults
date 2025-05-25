@@ -1,5 +1,4 @@
 let regionHover
-
 function isMobile() {
 	return window.matchMedia("(max-width: 768px)").matches;
 }
@@ -516,6 +515,7 @@ async function initRegionMenu() {
 		renderRegions(regions);
 		setupDropdownToggle();
 	}
+
 }
 
 
