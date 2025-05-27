@@ -288,7 +288,6 @@ function drawMap() {
 							// console.log(provLayer.feature.properties.NAME_1.toLowerCase(),'boooooooooooooo')
 
 
-							// activateTab('[data-type="localrace"]');
 
 							generateLocalRaceHTML(results)
 
@@ -299,6 +298,7 @@ function drawMap() {
 
 							displaySenatorialData(results['SENATOR OF PHILIPPINES']);
 							displayPartylistData(results['PARTY LIST OF PHILIPPINES']);
+							activateTab('[data-type="senators"]');
 						} catch (error) {
 							console.log(error, 'error fetching data')
 						}
@@ -374,7 +374,7 @@ function drawMap() {
 				// issue relies here
 				showCitiesForProvince(feature);
 				updateElectionResults("province", feature.properties.NAME_1);
-				activateTab('[data-type="senators"]');
+				// activateTab('[data-type="senators"]');
 			}
 		),
 
@@ -383,6 +383,8 @@ function drawMap() {
 			"NAME_2",
 			null,
 			function (feature, layer) {
+
+
 				const cityName = feature.properties.NAME_2 || "Unknown City";
 				const provinceName = feature.properties.NAME_1 || "Unknown Province";
 				const normalizedCity = cityName.toLowerCase().replace(/\s+/g, "");
@@ -437,15 +439,20 @@ function drawMap() {
 						layer.closeTooltip();
 					},
 					click: function (e) {
+						// activateTab('[data-type="localrace"]');
+						// alert("bang");
 						clearHighlightedLayers();
 						highlightLayer(layer);
 						updateInfoBox(cityName, `under ${provinceName}`);
 						updateElectionResults("city", cityName);
+						// activateTab('[data-type="localrace"]');
+
 						map.fitBounds(layer.getBounds(), {
 							padding: [50, 50],
 						});
 					},
 				});
+
 			}
 		),
 	])
@@ -461,6 +468,8 @@ function drawMap() {
 			provincesLayer.addTo(map);
 			map.fitBounds(provincesLayer.getBounds());
 			// updateElectionResults("national");
+			// activateTab('[data-type="localrace"]');
+			// alert("bang");
 		})
 		.catch((error) => console.error("Error loading layers:", error));
 }
@@ -738,6 +747,7 @@ async function highlightProvinceOnMap(provinceName, cityName, regionName = null)
 				// alert(1)
 				showCitiesForProvince(feature);
 				map.fitBounds(layer.getBounds());
+
 			}
 			return;
 		}
@@ -915,9 +925,10 @@ function highlightCityOnMap(cityName, provinceName, region) {
 		city: cityName
 	})
 
+
 	// First ensure the province is highlighted and cities are shown
 	highlightProvinceOnMap(provinceName, cityName);
-
+	// activateTab('[data-type="senators"]');
 	const displayCityName = cityName.toLowerCase() === provinceName.toLowerCase()
 		? `${cityName} City`
 		: cityName;
@@ -963,7 +974,10 @@ function highlightCityOnMap(cityName, provinceName, region) {
 	};
 
 	// Start trying to highlight the city
+	// activateTab('[data-type="localrace"]');
 	tryHighlightCity();
+	// activateTab('[data-type="localrace"]');
+	// alert("bang");
 }
 
 // Modified showCitiesForProvince to handle highlighting better
@@ -1363,6 +1377,7 @@ async function showCitiesForProvince(provinceFeature) {
 					console.log(error, 'error fetcing on 1286')
 				}
 			})
+
 	} else {
 		const cities = target?.places?.find((item) => {
 			if (provinceName === "maguindanao" && (item?.code === "maguindanao_del_norte")) {
@@ -1551,7 +1566,7 @@ async function showCitiesForProvince(provinceFeature) {
 					generateLocalRaceHTML(results, "city")
 					displaySenatorialData(results['SENATOR OF PHILIPPINES'], 'dito');
 					displayPartylistData(results['PARTY LIST OF PHILIPPINES']);
-
+					activateTab('[data-type="localrace"]');
 					// here
 					// updateElectionResults("city", cityName);
 					// map.fitBounds(layer.getBounds(), {
@@ -1768,7 +1783,7 @@ document.querySelector(".btn-light[onclick*='setView']").addEventListener("click
 		displayPartylistData(results.partyList);
 		displaySenatorialData(results.senatorial);
 	}
-	activateTab('[data-type="senators"]');
+	// activateTab('[data-type="senators"]');
 
 	drawMap()
 });

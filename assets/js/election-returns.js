@@ -124,7 +124,7 @@ function createPlaceElement(place, regionName = null, regionTxt = null) {
 				// Update all timestamp displays
 				// updateTimestampDisplay(timestamp, 200);
 				// updatePercentageDisplay(percentage, 200)
-
+				await activateTab('[data-type="senators"]');
 				document.getElementById("selected-place").textContent = place.name;
 				// Display data
 				if (results) {
@@ -176,7 +176,7 @@ function createPlaceElement(place, regionName = null, regionTxt = null) {
            style="transition: all 0.2s;"
            ">
         
-        <span class="ms-2 w-100 py-3" style="cursor:pointer; font-family: 'Roboto', sans-serif; font-weight: 400; font-size: 16px; color: #212529; text-decoration: none; margin-left: 8px;">${place.name}</span>
+        <span class="ms-3 w-100 py-3" style="cursor:pointer; font-family: 'Roboto', sans-serif; font-weight: 400; font-size: 16px; color: #212529; text-decoration: none; margin-left: 8px;">${place.name}</span>
       </div>
     `;
 
@@ -196,7 +196,7 @@ function createPlaceElement(place, regionName = null, regionTxt = null) {
 			if (provinceName) {
 				await highlightCityOnMap(place.name, provinceName, region2);
 
-
+				await activateTab('[data-type="localrace"]');
 				// updateElectionResults("city", place.name);
 				// console.log(place.name);
 				// console.log("cityyyyyyyyyyyyyyyyy");
