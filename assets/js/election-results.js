@@ -257,8 +257,6 @@ function generateLocalRaceHTML(data, type = "province") {
           <div class="d-flex justify-content-between w-100">
             <div class="d-flex flex-column">
               ${candidateName}
-           
-  ${candidateName}
 </div>
             <div class="d-flex">
               <div class="d-flex flex-column me-2">
