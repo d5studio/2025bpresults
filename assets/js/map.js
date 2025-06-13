@@ -28,17 +28,6 @@ function formatRegionName(regionFullName) {
 async function queryData({ region, province, city: fCity, national }) {
 	let fProvince = province && removeSpacesSpecialChar(province);
 	let fRegion = region
-	// console.log(region, 'region')
-	// console.log(fProvince, 'fProvince-----------')
-	// console.log(province, 'province')
-	// console.log(fCity, 'city')
-
-	// if (fRegion?.includes('region_iv-a')) {
-	// 	fRegion = 'region_iv_a'
-	// } else if(fRegion?.includes('region_iv-b')){
-	// 	fRegion = 'region_iv_a'
-	// }
-
 
 	try {
 		if (fRegion) {
@@ -71,17 +60,10 @@ async function queryData({ region, province, city: fCity, national }) {
 			response = await response.json();
 		}
 		else if (fCity) {
-			// console.log('fRegion: ', fRegion)
-			// console.log('fCity: ', fCity)
-			// console.log('fProvince: ', fProvince)
-			// console.log("eto");
 			response = await fetch(`${BASE}/${fRegion}/${fProvince.toLowerCase()}/${fCity.toLowerCase()}.json`);
 			response = await response.json();
 		}
 		else if (fRegion && fProvince) {
-
-			// console.log(allLocations);
-
 			let provinceCode = allLocations.regions
 				.find(r => {
 					if (r.code === fRegion) {
@@ -271,30 +253,13 @@ function drawMap() {
 									.replace(/\s+/g, "") === provNormalizedName
 						);
 
-						// let regionFormatted = formatRegion(region).toLowerCase();
-
-						// if(regionFormatted !== "car"){
-						// 	regionFormatted = regionFormatted.trim().split(" ").join("_");``
-						// }else if(regionFormatted === "car"){
-						// 	regionFormatted = "cordillera_administrative_region"
-						// }
-						// displaySenatorialData(results?.senatorial)
 						try {
 							let payload = formatRegionPayload(region)
 							const { results, timestamp } = await queryData({
 								region: payload,
 								province: cities[provLayer.feature.properties.NAME_1.toUpperCase()]
 							});
-							// console.log(provLayer.feature.properties.NAME_1.toLowerCase(),'boooooooooooooo')
-
-
-
 							generateLocalRaceHTML(results)
-
-							// const pGov = returnKeyOfArr('PROVINCIAL GOVERNOR', results);
-							// const pVicGov = returnKeyOfArr('PROVINCIAL VICE-GOVERNOR', results);
-							// const member = returnKeyOfArr('MEMBER, HOUSE OF REPRESENTATIVES OF', results);
-							// buildLocalPayload(timestamp,results[pGov],results[pVicGov], results[member])	
 
 							displaySenatorialData(results['SENATOR OF PHILIPPINES']);
 							displayPartylistData(results['PARTY LIST OF PHILIPPINES']);
@@ -422,30 +387,29 @@ function drawMap() {
 				);
 
 				layer.on({
-					mouseover: function (e) {
+					mouseover: function(e) {
 						layer.setStyle({
 							weight: 3,
-							color: "#00BFFF",
-							opacity: 1,
+							color: '#00BFFF',
+							opacity: 1
 						});
 						layer.openTooltip(layer.getBounds().getCenter());
 					},
-					mouseout: function (e) {
-						layer.setStyle({
-							weight: 1,
-							color: "#000",
-							opacity: 0.8,
-						});
+					mouseout: function(e) {
+						if (!highlightedLayers.includes(layer)) {
+							layer.setStyle({
+								weight: 1,
+								color: '#000',
+								opacity: 0.8
+							});
+						}
 						layer.closeTooltip();
 					},
 					click: function (e) {
-						// activateTab('[data-type="localrace"]');
-						// alert("bang");
 						clearHighlightedLayers();
 						highlightLayer(layer);
 						updateInfoBox(cityName, `under ${provinceName}`);
 						updateElectionResults("city", cityName);
-						// activateTab('[data-type="localrace"]');
 
 						map.fitBounds(layer.getBounds(), {
 							padding: [50, 50],
@@ -467,9 +431,6 @@ function drawMap() {
 			countryLayer.addTo(map);
 			provincesLayer.addTo(map);
 			map.fitBounds(provincesLayer.getBounds());
-			// updateElectionResults("national");
-			// activateTab('[data-type="localrace"]');
-			// alert("bang");
 		})
 		.catch((error) => console.error("Error loading layers:", error));
 }
@@ -697,7 +658,6 @@ function highlightRegionOnMap(regionName) {
 }
 
 async function highlightProvinceOnMap(provinceName, cityName, regionName = null) {
-	// console.log(cityName, 'citynaeemeeeeeeeeeeeee')
 	if (!cityName) {
 
 		const { results, timestamp } = await queryData({
@@ -705,7 +665,6 @@ async function highlightProvinceOnMap(provinceName, cityName, regionName = null)
 			region: regionHover,
 			province: provinceName
 		});
-		// console.log(results);
 		activateTab('[data-type="localrace"]');
 
 		const pGov = returnKeyOfArr('PROVINCIAL GOVERNOR', results);
@@ -725,22 +684,21 @@ async function highlightProvinceOnMap(provinceName, cityName, regionName = null)
 
 	clearHighlightedLayers();
 	let found = false;
-	// console.log(allProvincesData);
 	provincesLayer.eachLayer((layer) => {
 		const layerProvince = layer.feature?.properties.NAME_1;
 		if (
 			layerProvince &&
 			layerProvince.toLowerCase() === provinceName.replace(/[\s-]+/g, '').toLowerCase()
 		) {
-			highlightLayer(layer);
+			if (cityName.includes('region')) {
+				highlightLayer(layer);
+			}
 			found = true;
 
 			// Find the corresponding feature in the original data
 			const feature = allProvincesData.features.find(
 				(f) => f.properties.NAME_1.toLowerCase() === provinceName.replace(/[\s-]+/g, '').toLowerCase()
 			);
-
-			// console.log(feature, 'featurefeature')
 
 			if (feature) {
 				// Show cities for this provincea
@@ -759,11 +717,6 @@ async function highlightProvinceOnMap(provinceName, cityName, regionName = null)
 }
 
 async function clickedByHeader({ region, province, city }) {
-	// console.log(region, 'regionregion')
-	// console.log(province, 'provinceprovince')
-	// console.log(city, 'city')
-
-
 	if (city) {
 		const { results, timestamp } = await queryData({
 			region: region.trim().replace(/[\s-]+/g, '_').toLowerCase(),
@@ -771,40 +724,25 @@ async function clickedByHeader({ region, province, city }) {
 			city: city.trim().replace(/[\s-]+/g, '_').toLowerCase()
 		});
 
-
-		// const pGov = returnKeyOfArr('PROVINCIAL GOVERNOR', results);
-		// const pVicGov = returnKeyOfArr('PROVINCIAL VICE-GOVERNOR', results);
-		// const member = returnKeyOfArr('MEMBER, HOUSE OF REPRESENTATIVES OF', results);
-		// const mayor =  returnKeyOfArr('MAYOR OF', results);
-		// const vMayor =  returnKeyOfArr('VICE-MAYOR OF', results);
 		displaySenatorialData(results['SENATOR OF PHILIPPINES']);
-
-
 		activateTab('[data-type="localrace"]');
 		displayPartylistData(results['PARTY LIST OF PHILIPPINES']);
 
 		// buildLocalPayload(results)
 		generateLocalRaceHTML(results);
-		console.log(city);
 		updateInfoBox(city, `under ${province}`);
-
-		// buildLocalPayload(timestamp,results[pGov],results[pVicGov],results[member], results[mayor],results[vMayor], results[member])
-
-
 	} else if (region) {
 		alert("region`")
 
 		const { results } = await queryData({
-			region: regionF
+			region
 		});
-
 
 		buildLocalPayload(results)
 		activateTab('[data-type="localrace"]');
 
 	}
 }
-
 
 function showCitiesForNCR() {
 	if (!allCitiesData) {
@@ -918,22 +856,15 @@ function showCitiesForNCR() {
 }
 
 function highlightCityOnMap(cityName, provinceName, region) {
-
 	clickedByHeader({
 		region,
 		province: provinceName,
 		city: cityName
 	})
 
-
 	// First ensure the province is highlighted and cities are shown
 	highlightProvinceOnMap(provinceName, cityName);
-	// activateTab('[data-type="senators"]');
-	const displayCityName = cityName.toLowerCase() === provinceName.toLowerCase()
-		? `${cityName} City`
-		: cityName;
-	updateInfoBox(displayCityName, `under ${provinceName}`);
-	document.getElementById("selected-place").innerText = displayCityName;
+
 	// Then try to find and highlight the city
 	const tryHighlightCity = () => {
 		if (!citiesLayer) {
@@ -954,15 +885,15 @@ function highlightCityOnMap(cityName, provinceName, region) {
 				layerProvince.toLowerCase() === provinceName.toLowerCase()
 			) {
 				clearHighlightedLayers();
-				highlightLayer(layer);
-				map.fitBounds(layer.getBounds());
+				highlightLayer(layer, true);
 
-				// Update info box
-				const displayCityName =
-					cityName.toLowerCase() === provinceName.toLowerCase()
-						? `${cityName} City`
-						: cityName;
-				// updateInfoBox(displayCityName, `under ${provinceName}`);
+				const displayCityName = cityName.toLowerCase() === provinceName.toLowerCase()
+					? `${cityName} City`
+					: cityName;
+				updateInfoBox(displayCityName, `under ${provinceName}`);
+				document.getElementById("selected-place").innerText = displayCityName;
+
+				map.fitBounds(layer.getBounds());
 				cityFound = true;
 				return;
 			}
@@ -973,11 +904,8 @@ function highlightCityOnMap(cityName, provinceName, region) {
 		}
 	};
 
-	// Start trying to highlight the city
-	// activateTab('[data-type="localrace"]');
-	tryHighlightCity();
-	// activateTab('[data-type="localrace"]');
-	// alert("bang");
+	// tryHighlightCity();
+	setTimeout(tryHighlightCity, 300);
 }
 
 // Modified showCitiesForProvince to handle highlighting better
@@ -1053,14 +981,6 @@ const cities = [];
 // Call on page load
 // responsible for fetching the data of list onload
 document.addEventListener("DOMContentLoaded", async () => {
-	// await loadCitySenatoriables();
-	// updateElectionResults('national');
-	// const {results} = await queryData({national:'national'});
-
-	// displaySenatorialData(results?.senatorial)
-	// citySenatoriablesData = results?.senatorial;
-
-	// displayPartylistData(results?.partyList)
 	let tmp = await fetchRegions();
 	tmp.regions.forEach(region => {
 		region.places.forEach(province => {
@@ -1085,11 +1005,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 			return
 		}
 
-		// console.log('READY', READY)
 		const data = await queryData({ national: 'national' });
-		// console.log('data:', data)
 		const { timestamp, percentage, results } = data
-		// console.log('----', results)
 		await queryMappedData("province");
 
 		drawMap()
@@ -1110,33 +1027,34 @@ document.addEventListener("DOMContentLoaded", async () => {
 	}
 });
 
+function highlightLayer(layer, isCity) {
+	// Prevent duplicates
+	if (!highlightedLayers.includes(layer)) {
+		map.removeLayer(layer);
+		map.addLayer(layer);
 
+		let opacity = 1;
+		if (!blinkInterval) {
+			blinkInterval = setInterval(() => {
+				opacity = opacity === 1 ? 0.6 : 1;
+				highlightedLayers.forEach((l) => {
+					l.setStyle({
+						weight: 3,
+						color: "#00BFFF",
+						dashArray: null,
+						opacity,
+						fillOpacity: layer.options.fillOpacity,
+					});
 
-function highlightLayer(layer) {
-	console.log(layer);
-	layer.setStyle({
-		weight: 3,
-		color: "#1E90FF",
-		dashArray: null,
-		opacity: 1,
-		fillOpacity: layer.options.fillOpacity,
-	});
-
-	layer.bringToFront();
-	layer.redraw();
-
-	let opacity = 1;
-	if (!blinkInterval) {
-		blinkInterval = setInterval(() => {
-			opacity = opacity === 1 ? 0.7 : 1;
-			highlightedLayers.forEach((l) => {
-				l.setStyle({
-					opacity: opacity,
+					if (isCity) {
+						l.bringToFront();
+					}
 				});
-			});
-		}, 800);
+			}, 800);
+		}
+
+		highlightedLayers.push(layer);
 	}
-	highlightedLayers.push(layer);
 }
 
 function clearHighlightedLayers() {
@@ -1278,13 +1196,15 @@ function addLayer(geojsonUrl, nameProperty, styleOptions, onClickHandler) {
 							);
 						},
 						mouseout: function (e) {
-							layer.setStyle({
-								weight: 1,
-								color: "#000",
-								opacity: 1,
-							});
+							if (!highlightedLayers.includes(layer)) {
+								layer.setStyle({
+									weight: 1,
+									color: '#000',
+									opacity: 0.8
+								});
+							}
 							layer.closeTooltip();
-						},
+						}
 					})
 				},
 			});
@@ -1493,20 +1413,22 @@ async function showCitiesForProvince(provinceFeature) {
 			);
 
 			layer.on({
-				mouseover: function (e) {
+				mouseover: function(e) {
 					layer.setStyle({
 						weight: 3,
-						color: "#00BFFF",
-						opacity: 1,
+						color: '#00BFFF',
+						opacity: 1
 					});
 					layer.openTooltip(layer.getBounds().getCenter());
 				},
-				mouseout: function (e) {
-					layer.setStyle({
-						weight: 1,
-						color: "#000",
-						opacity: 0.8,
-					});
+				mouseout: function(e) {
+					if (!highlightedLayers.includes(layer)) {
+						layer.setStyle({
+							weight: 1,
+							color: '#000',
+							opacity: 0.8
+						});
+					}
 					layer.closeTooltip();
 				},
 				click: async function (e) {
@@ -1551,189 +1473,16 @@ async function showCitiesForProvince(provinceFeature) {
 
 					const results = data.results;
 
-					// Example: Activate the "Local Race" tab
-					// activateTab('[data-type="senators"]');
-					//   const {results} = await queryData(payload, provLayer.feature.properties.NAME_1);
-					// activateTab('[data-type="localrace"]');
-
-					// const newRes = Object.entries(results)?.map(([key, val])=>{
-					// 	return {
-					// 		key: key.split(" ").join("_"),
-					// 		val
-					// 	}
-					// })
-
 					generateLocalRaceHTML(results, "city")
 					displaySenatorialData(results['SENATOR OF PHILIPPINES'], 'dito');
 					displayPartylistData(results['PARTY LIST OF PHILIPPINES']);
 					activateTab('[data-type="localrace"]');
-					// here
-					// updateElectionResults("city", cityName);
-					// map.fitBounds(layer.getBounds(), {
-					//   padding: [50, 50]
-					// });
 				},
 			});
 		},
 	}).addTo(map);
-
-	// updateInfoBox(provinceName, `under ${region}`);
-	// updateElectionResults("province", provinceName);
 }
 
-// function showCitiesForNCR() {
-//   if (!allCitiesData) {
-//     console.error("Cities data not loaded yet");
-//     return;
-//   }
-//   if (citiesLayer) map.removeLayer(citiesLayer);
-
-//   const ncrCities = {
-//     type: "FeatureCollection",
-//     features: allCitiesData.features.filter(
-//       feature => (feature.properties.NAME_1 || "").toLowerCase().includes("metropolitanmanila")
-//     )
-//   };
-
-//   citiesLayer = L.geoJSON(ncrCities, {
-//     style: function(feature) {
-//       const cityName = feature.properties.NAME_2 || "unknown";
-//       const normalizedCity = cityName.toLowerCase().replace(/\s+/g, '');
-//       let topCandidate = null;
-//       let maxVotes = 0;
-
-//       const cityCandidates = citySenatoriablesData.filter(c =>
-//         c.city.toLowerCase().replace(/\s+/g, '') === normalizedCity
-//       );
-
-//       cityCandidates.forEach(candidate => {
-//         if (candidate.votes > maxVotes) {
-//           maxVotes = candidate.votes;
-//           topCandidate = candidate;
-//         }
-//       });
-
-//       const fillColor = topCandidate ? topCandidate.candidateColor : '#FFFFFF';
-//       return {
-//         fillColor: fillColor,
-//         weight: 1,
-//         opacity: 0.8,
-//         color: '#000',
-//         fillOpacity: 0.5
-//       };
-//     },
-//     onEachFeature: function(feature, layer) {
-//       const cityName = feature.properties.NAME_2 || "Unknown City";
-//       const normalizedCity = cityName.toLowerCase().replace(/\s+/g, '');
-//       let topCandidate = null;
-//       let maxVotes = 0;
-
-//       const cityCandidates = citySenatoriablesData.filter(c =>
-//         c.city.toLowerCase().replace(/\s+/g, '') === normalizedCity
-//       );
-
-//       cityCandidates.forEach(candidate => {
-//         if (candidate.votes > maxVotes) {
-//           maxVotes = candidate.votes;
-//           topCandidate = candidate;
-//         }
-//       });
-
-//       const candidateName = topCandidate ? topCandidate.candidateName : "No Candidate";
-
-//       layer.bindTooltip(`${cityName}<br>Top Candidate: ${candidateName}`, {
-//         permanent: false,
-//         direction: 'center',
-//         className: 'candidate-tooltip'
-//       });
-
-//       layer.on({
-//         mouseover: function(e) {
-//           if (!highlightedLayers.includes(layer)) {
-//             layer.setStyle({
-//               weight: 3,
-//               color: '#00BFFF',
-//               opacity: 1
-//             });
-//           }
-//           layer.openTooltip(layer.getBounds().getCenter());
-//         },
-//         mouseout: function(e) {
-//           if (!highlightedLayers.includes(layer)) {
-//             layer.setStyle({
-//               weight: 1,
-//               color: '#000',
-//               opacity: 0.8
-//             });
-//           }
-//           layer.closeTooltip();
-//         },
-//         click: function(e) {
-//           clearHighlightedLayers();
-//           highlightLayer(layer);
-//           updateInfoBox(cityName, "under National Capital Region");
-//           // updateElectionResults("city", cityName);
-//           // map.fitBounds(layer.getBounds(), {
-//           //   padding: [50, 50]
-//           // });
-//         }
-//       });
-//     }
-//   }).addTo(map);
-
-//   ncrCities.features.forEach(cityFeature => {
-//     citiesLayer.eachLayer(layer => {
-//       if (layer.feature === cityFeature) {
-//         highlightLayer(layer);
-//       }
-//     });
-//   });
-
-//   // updateElectionResults("region", "National Capital Region");
-// }
-
-// function updateElectionResults(level, name) {
-//   let jsonPath;
-//   if (level === 'region') {
-//     jsonPath = `${BASE_URL}/assets/BP2025/data/results_senators_national.json`;
-//     console.log('Loading REGIONAL data');
-//   } else if (level === 'city') {
-//     jsonPath = `${BASE_URL}/assets/BP2025/data/results_senators_national.json`;
-//     console.log('Loading CITY data');
-//   } else {
-//     jsonPath = `${BASE_URL}/assets/BP2025/data/results_senators_national.json`;
-//     console.log('Loading NATIONAL data');
-//   }
-
-//   fetch(jsonPath)
-//     .then(response => {
-//       if (!response.ok) {
-//         console.error('Failed to load data:', response.status);
-//         throw new Error('Network response was not ok');
-//       }
-//       return response.json();
-//     })
-//     .then(data => {
-//       console.log("Data loaded successfully:", data);
-//       let displayData;
-//       if (level === 'city') {
-//         displayData = data.filter(senator =>
-//           senator.city.toLowerCase().replace(/\s+/g, '') === name.toLowerCase().replace(/\s+/g, '')
-//         );
-//       } else {
-//         displayData = data;
-//       }
-//       console.log(`Displaying ${level.toUpperCase()} candidates:`, displayData.length);
-//       if (displayData.length === 0) {
-//         console.warn("WARNING: No data to display!");
-//       }
-//       displaySenatorialData(displayData, level, name);
-//     })
-//     .catch(error => {
-//       console.error('Error loading data:', error);
-//       displayError();
-//     });
-// }
 function updateElectionResults(level, name) {
 	const data = electionData.senators;
 	let filteredData = [];
