@@ -658,6 +658,10 @@ function highlightRegionOnMap(regionName) {
 }
 
 async function highlightProvinceOnMap(provinceName, cityName, regionName = null) {
+	if (provinceName.toLowerCase().includes('national capital region')) {
+	provinceName = 'MetropolitanManila';
+}
+
 	if (!cityName) {
 
 		const { results, timestamp } = await queryData({
@@ -700,6 +704,8 @@ async function highlightProvinceOnMap(provinceName, cityName, regionName = null)
 				(f) => f.properties.NAME_1.toLowerCase() === provinceName.replace(/[\s-]+/g, '').toLowerCase()
 			);
 
+            // console.log(allProvincesData.features.map(f => f.properties.NAME_1));
+
 			if (feature) {
 				// Show cities for this provincea
 				// alert(1)
@@ -713,6 +719,7 @@ async function highlightProvinceOnMap(provinceName, cityName, regionName = null)
 
 	if (!found) {
 		console.warn(`Province not found: ${provinceName}`);
+		console.log('Available provinces:', allProvincesData.features.map(f => f.properties.NAME_1));
 	}
 }
 
@@ -866,43 +873,71 @@ function highlightCityOnMap(cityName, provinceName, region) {
 	highlightProvinceOnMap(provinceName, cityName);
 
 	// Then try to find and highlight the city
-	const tryHighlightCity = () => {
-		if (!citiesLayer) {
-			setTimeout(tryHighlightCity, 100);
+	const normalizeName = (str) => str?.trim().toLowerCase().replace(/\s+/g, '');
+	// console.log("normalizeName: ",normalizeName(region));
+	if (normalizeName(region) === "national_capital_region" || normalizeName(region) === "ncr") {
+	provinceName = "MetropolitanManila"; // or whatever your GeoJSON uses in NAME_1
+}
+console.log("provinceName" ,provinceName);
+const tryHighlightCity = () => {
+	if (!citiesLayer) {
+		setTimeout(tryHighlightCity, 100);
+		return;
+	}
 
+	let cityFound = false;
+
+	// console.log('Trying to highlight city:', cityName, 'in', provinceName);
+
+// 	citiesLayer.eachLayer((layer) => {
+// 	console.log("GeoJSON NAME_1 (province):", layer.feature?.properties.NAME_1);
+// });
+
+	citiesLayer.eachLayer((layer) => {
+		const layerCity = layer.feature?.properties.NAME_2;
+		const layerProvince = layer.feature?.properties.NAME_1;
+
+		const normalizedLayerCity = normalizeName(layerCity);
+		const normalizedLayerProvince = normalizeName(layerProvince);
+		const normalizedCity = normalizeName(layerCity);
+		const normalizedProvince = normalizeName(layerProvince);
+
+		// console.log('Checking layer:', normalizedLayerCity, 'in', normalizedLayerProvince);
+		// console.log('Checking Normal:', normalizedCity, 'in', normalizedProvince);
+// 		citiesLayer.eachLayer((layer) => {
+// 	const rawCity = layer.feature?.properties.NAME_2;
+// 	const rawProvince = layer.feature?.properties.NAME_1;
+// 	console.log('Layer city:', rawCity, '| Layer province:', rawProvince);
+// });
+// console.log('Total city features:', citiesLayer.getLayers().length);
+
+		if (
+			normalizedLayerCity === normalizedCity &&
+			normalizedLayerProvince === normalizedProvince
+		) {
+			// console.log("success");
+			clearHighlightedLayers();
+			highlightLayer(layer, true);
+
+			const displayCityName = normalizedCity === normalizedProvince
+				? `${cityName} City`
+				: cityName;
+
+			updateInfoBox(displayCityName, `under ${provinceName}`);
+			document.getElementById("selected-place").innerText = displayCityName;
+//			console.log("display:", displayCityName);
+			map.fitBounds(layer.getBounds());
+			cityFound = true;
 			return;
 		}
+	});
+	console.log("cityName: ",cityName);
 
-		let cityFound = false;
-		citiesLayer.eachLayer((layer) => {
-			const layerCity = layer.feature?.properties.NAME_2;
-			const layerProvince = layer.feature?.properties.NAME_1;
+	if (!cityFound) {
+		console.warn(`City not found: ${cityName} in ${provinceName}`);
+	}
+};
 
-			if (
-				layerCity &&
-				layerProvince &&
-				layerCity.toLowerCase() === cityName.toLowerCase() &&
-				layerProvince.toLowerCase() === provinceName.toLowerCase()
-			) {
-				clearHighlightedLayers();
-				highlightLayer(layer, true);
-
-				const displayCityName = cityName.toLowerCase() === provinceName.toLowerCase()
-					? `${cityName} City`
-					: cityName;
-				updateInfoBox(displayCityName, `under ${provinceName}`);
-				document.getElementById("selected-place").innerText = displayCityName;
-
-				map.fitBounds(layer.getBounds());
-				cityFound = true;
-				return;
-			}
-		});
-
-		if (!cityFound) {
-			console.warn(`City not found: ${cityName} in ${provinceName}`);
-		}
-	};
 
 	// tryHighlightCity();
 	setTimeout(tryHighlightCity, 300);
